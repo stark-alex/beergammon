@@ -67,7 +67,7 @@ class App extends Component {
                   <div>
                      <AppBar>
                         <Toolbar>
-                           <Logo>Beergammon (In Progress)</Logo>
+                           <Logo>Beergammon (Beta)</Logo>
                         </Toolbar>
                      </AppBar>
                   </div>
