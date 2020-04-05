@@ -8,7 +8,7 @@ import Routes from './Routes';
 import { createMuiTheme } from "@material-ui/core/styles";
 import { MuiThemeProvider } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
-import ToolBar from "@material-ui/core/ToolBar";
+//import ToolBar from "@material-ui/core/ToolBar";
 import { ThemeProvider } from "styled-components";
 import styled from "styled-components";
 
@@ -66,9 +66,7 @@ class App extends Component {
                <ThemeProvider theme={theme}>
                   <div>
                      <AppBar>
-                        <ToolBar>
                            <Logo>Beergammon (In Progress)</Logo>
-                        </ToolBar>
                      </AppBar>
                   </div>
                   <FixedAppBarMargin>{this.props.children}</FixedAppBarMargin>
