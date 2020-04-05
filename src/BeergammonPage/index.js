@@ -8,7 +8,7 @@ import { BeergammonBoard } from '../BeergammonBoard';
 const BeergammonClient = Client({ 
    game: Beergammon,
    board: BeergammonBoard,
-   multiplayer: SocketIO({ server: "http://localhost:8000" }), //`{process.env.REACT_APP_API_URL}` }),
+   multiplayer: SocketIO({ server: "https://beergammon-server.herokuapp.com" }), //`{process.env.REACT_APP_API_URL}` }),
 });
 
 const BeergammonPage = () => {

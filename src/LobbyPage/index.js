@@ -7,8 +7,8 @@ import { BeergammonBoard } from '../BeergammonBoard';
 
 const LobbyPage = () => (
   <Lobby
-    gameServer="http://localhost:8000" //{process.env.REACT_APP_API_URL}
-    lobbyServer="http://localhost:8000" //{process.env.REACT_APP_API_URL}
+    gameServer="https://beergammon-server.herokuapp.com" //{process.env.REACT_APP_API_URL}
+    lobbyServer="https://beergammon-server.herokuapp.com" //{process.env.REACT_APP_API_URL}
     gameComponents={[
       {
         game: Beergammon,
