@@ -12,7 +12,6 @@ export class BeergammonBoard extends React.Component {
    }
 
    pointStyle = {
-      border: '1px solid #555',
       width: '50px',
       height: '200px',
       lineHeight: '50px',
@@ -20,34 +19,30 @@ export class BeergammonBoard extends React.Component {
       position: 'relative',
    };
 
-   bottomTriangle = {
-      width: '0',
-      height: '0',
-      borderStyle: 'solid',
-      borderWidth: '0 25px 200px 25px',
-      borderColor: 'transparent transparent #DCDCDC transparent',
+   bottomTriangleDark = {
+      backgroundColor: '#808080',
+      clipPath: "polygon(50% 0, 0 100%, 100% 100%)"
    };
 
-   bottomTriangleDark = {
-      borderColor: 'transparent transparent #808080 transparent',
+   bottomTriangleLight = {
+      backgroundColor: '#DCDCDC',
+      clipPath: "polygon(50% 0, 0 100%, 100% 100%)"
    }
 
-   topTriangle = {
-      width: '0',
-      height: '0',
-      borderStyle: 'solid',
-      borderWidth: '200px 25px 0 25px',
-      borderColor: '#DCDCDC transparent transparent transparent',
-   };
-
    topTriangleDark = {
-      borderColor: '#808080 transparent transparent transparent',
+      backgroundColor: '#808080',
+      clipPath: "polygon(50% 100%, 0 0, 100% 0)"
    };
 
-   bottomPointLight = {...this.pointStyle,...this.bottomTriangle};
-   bottomPointDark = {...this.bottomPointLight,...this.bottomTriangleDark};
-   topPointLight = {...this.pointStyle,...this.topTriangle};
-   topPointDark = {...this.topPointLight,...this.topTriangleDark};
+   topTriangleLight = {
+      backgroundColor: '#DCDCDC',
+      clipPath: "polygon(50% 100%, 0 0, 100% 0)"
+   };
+
+   bottomPointLight = {...this.pointStyle,...this.bottomTriangleLight};
+   bottomPointDark = {...this.pointStyle,...this.bottomTriangleDark};
+   topPointLight = {...this.pointStyle,...this.topTriangleLight};
+   topPointDark = {...this.pointStyle,...this.topTriangleDark};
 
    getPointStyle(i,j) {
       if (i === 0) {
@@ -66,22 +61,22 @@ export class BeergammonBoard extends React.Component {
    }
 
    piece = {
-      position: "absolute",
+      position: "relative",
       textAlign: "center",
       borderRadius: "50%",
+      left: "4px",
+      top: "0px",
       width: "40px",
       height: "40px",
       lineHeight: "40px",
    };
 
    topPointPiecePosition = {
-      left: "-19px",
-      top: "-198px",
+      top: "-80px",
    }
 
    bottomPointPiecePosition = {
-      left: "-19px",
-      top: "160px",
+      top: "80px",
    }
 
    blackPiece = {
@@ -94,68 +89,30 @@ export class BeergammonBoard extends React.Component {
       color: "black",
    }
 
-   blackHomePiecePosition = {
-      left: "7px",
-      top: "245px",
-      background: "black",
-      color: "white",
-   }
-
-   whiteHomePiecePosition = {
-      left: "7px",
-      top: "440px",
-      background: "white",
-      color: "black",
-   }
-
-   blackPokeyPiecePosition = {
-      left: "393px",
-      top: "159px",
-      background: "black",
-      color: "white",
-   }
-
-   whitePokeyPiecePosition = {
-      left: "393px",
-      top: "213px",
-      background: "white",
-      color: "black",
-   }
-
-   pieceTopRow = {...this.piece,...this.topPointPiecePosition};
-   pieceBottomRow = {...this.piece,...this.bottomPointPiecePosition};
-   pieceHome = {...this.piece,...this.homePiecePosition};
+   blackPiece = {...this.piece,...this.blackPiece};
+   whitePiece = {...this.piece,...this.whitePiece};
 
    getPieceStyle(section, row, color) {
       if (section === "points") {
          if (color === "b") {
             if (row === 0) {
-               return {...this.pieceTopRow, ...this.blackPiece};
+               return {...this.blackPiece,...this.topPointPiecePosition};
             } else {
-               return {...this.pieceBottomRow, ...this.blackPiece};
+               return {...this.blackPiece, ...this.bottomPointPiecePosition};
             }
          } else if (color === "w") {
             if (row === 0) {
-               return {...this.pieceTopRow, ...this.whitePiece};
+               return {...this.whitePiece, ...this.topPointPiecePosition};
             } else {
-               return {...this.pieceBottomRow, ...this.whitePiece};
+               return {...this.whitePiece, ...this.bottomPointPiecePosition};
             }
-         } else {
-            return  this.piece;
-         }
-      } else if (section === "home") {
-         if (color === "b") {
-            return {...this.piece,...this.blackHomePiecePosition};
-         } else if (color === "w") {
-            return {...this.piece,...this.whiteHomePiecePosition};
-         }
-      } else if (section === "pokey") {
-         if (color === "b") {
-            return {...this.piece,...this.blackPokeyPiecePosition};
-         } else if (color === "w") {
-            return {...this.piece,...this.whitePokeyPiecePosition};
-         }
+         } 
+      } else if (color === "b") {
+         return this.blackPiece;
+      } else {
+         return this.whitePiece;
       }
+      
    }
 
    getSpotPiece(section, id, row) {
