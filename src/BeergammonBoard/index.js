@@ -6,11 +6,11 @@ export class BeergammonBoard extends React.Component {
    getControls() {
       let button = null;
 
-      if (this.props.ctx.phase === 'rollForNumbers') {
+      if (this.props.isActive && this.props.ctx.phase === 'rollForNumbers') {
          button = <button onClick={() =>this.onRollForNumber()}>Roll for Numbers</button>
-      } else if (this.props.ctx.phase === 'startGame') {
+      } else if (this.props.isActive && this.props.ctx.phase === 'startGame') {
          button = <button onClick={() =>this.onRollForStart()}>Roll to Start</button>
-      } else {
+      } else if (this.props.ctx.phase === 'play') {
          if (this.props.isActive && this.props.G.dice.every(element => element === null)) {
             button = <button onClick={() => this.onClickRoll()}>Roll Dice</button>
          } else {
@@ -20,21 +20,33 @@ export class BeergammonBoard extends React.Component {
 
       let dice = this.props.G.dice.filter(Boolean).join(", ");
 
-      return ( 
-         <div>
-            {button}:{dice}
-         </div>
-      )
-   }
+      if (dice === "") {
+         return ( 
+            <div>
+               {button}
+            </div>
+         )
+      } else {
+         return (
+            <div>
+               {button}:{dice}
+            </div>
+         )
+      }
+}
 
    // Board
 
    onRollForNumber() {
       this.props.moves.rollForNumbers();
+
+      // TODO: display info dialog
    }
 
    onRollForStart () {
       this.props.moves.rollForStart();
+
+      // TODO display first player dialog
    }
 
    onClickRoll () {
