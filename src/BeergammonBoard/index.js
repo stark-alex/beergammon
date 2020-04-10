@@ -1,6 +1,42 @@
 import React from 'react';
 
 export class BeergammonBoard extends React.Component {
+
+   // Control Panel
+   getControls() {
+      let button = null;
+
+      if (this.props.ctx.phase === 'rollForNumbers') {
+         button = <button onClick={() =>this.onRollForNumber()}>Roll for Numbers</button>
+      } else if (this.props.ctx.phase === 'startGame') {
+         button = <button onClick={() =>this.onRollForStart()}>Roll to Start</button>
+      } else {
+         if (this.props.isActive && this.props.G.dice.every(element => element === null)) {
+            button = <button onClick={() => this.onClickRoll()}>Roll Dice</button>
+         } else {
+            button = <button onClick={() => this.onClickRoll()} disabled>Roll Dice</button>
+         }
+      }
+
+      let dice = this.props.G.dice.filter(Boolean).join(", ");
+
+      return ( 
+         <div>
+            {button}:{dice}
+         </div>
+      )
+   }
+
+   // Board
+
+   onRollForNumber() {
+      this.props.moves.rollForNumbers();
+   }
+
+   onRollForStart () {
+      this.props.moves.rollForStart();
+   }
+
    onClickRoll () {
       this.props.moves.rollDice();
    }
@@ -130,6 +166,7 @@ export class BeergammonBoard extends React.Component {
    }
 
    render() {
+
       let winner = '';
       if (this.props.ctx.gameover) {
          winner = 
@@ -187,20 +224,23 @@ export class BeergammonBoard extends React.Component {
          rightPointsBody.push(<tr key="1" style={rowStyle}>{rightPoints}</tr>);
       }
 
-      let rollButton = null
-      if (this.props.G.dice.every(element => element === null)) {
-         rollButton = <button onClick={() => this.onClickRoll()}>Roll Dice</button>
-      } else {
-         rollButton = <button onClick={() => this.onClickRoll()} disabled>Roll Dice</button>
-      }
-      let dice = this.props.G.dice.filter(Boolean).join(", ");
-
       const columnStyle = {
          float: "left"
       };
 
+      let controlPanel = this.getControls();
+
+      let player1Info = <p>Player 1 number: {this.props.G.numbers[0]}</p>
+      let player2Info = <p>Player 2 number: {this.props.G.numbers[1]}</p>
+      let socials = <p>Socials: {this.props.G.socials.filter(Boolean).join(", ")}</p>
+
+
       return (
          <div class="row">
+            {controlPanel}
+            {player1Info}
+            {player2Info}
+            {socials}
             <div style={columnStyle} class="column">
                <table id="home">
                   <tbody>
@@ -244,7 +284,6 @@ export class BeergammonBoard extends React.Component {
                </table>
             </div>
 
-            {rollButton}: {dice}
             {winner}
          </div>
       )
