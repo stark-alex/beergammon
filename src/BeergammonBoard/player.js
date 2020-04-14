@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
 
 import PlayersNamesContext from "./playersNamesContext";
 
@@ -23,7 +24,9 @@ export const StyledAvatar = styled(Avatar)`
 `;
 
 const Player = ({
-  player
+  player,
+  dice,
+  number
 }) => (
   <PlayersNamesContext.Consumer>
     {playersNames => {
@@ -38,6 +41,8 @@ const Player = ({
             }
             title={playerName}
           />
+          <CardContent>Dice: {dice}</CardContent>
+          <CardContent>Number: {number}</CardContent>
         </DetachedCard>
       );
     }}

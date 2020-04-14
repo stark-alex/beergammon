@@ -21,47 +21,44 @@ export const FullHeightContainer = styled(Container)`
 `;
 
 class PlayersControls extends React.Component {
+   state = {
+      rollForNumbersStarted: false,
+      rollForStartStarted: false,
+   };
 
-   getButtonAction() {
-      if (this.props.isActive && this.props.ctx.phase === 'rollForNumbers') {
-         return this.props.moves.rollForNumbers;
-      } else if (this.props.isActive && this.props.ctx.phase === 'startGame') {
-         return  this.props.moves.rollForStart;
-      } else if (this.props.ctx.phase === 'play') {
-         return this.props.moves.startDiceRoll;
-      }
-   }
-   
-   getButtonText() {
-      if (this.props.isActive && this.props.ctx.phase === 'rollForNumbers') {
-         return "Roll for Numbers";
-      } else if (this.props.isActive && this.props.ctx.phase === 'startGame') {
-         return "Roll for Start";
-      } else if (this.props.ctx.phase === 'play') {
-         return "Roll Dice";
-      }
-   }
+   handleStartDiceRoll = () => {
+      this.props.moves.startDiceRoll();
+    };
 
    render() {
+      if (!this.rollForNumbersStarted && this.props.ctx.phase === 'rollForNumbers' && this.props.G.rollingDice === null) {
+         this.props.moves.startRollForNumbers();
+         this.rollForNumbersStarted = true;
+      } else if (!this.rollForStartStarted && this.props.isActive && this.props.ctx.phase === 'startGame' && this.props.G.rollingDice === null) {
+         this.props.moves.startRollForStart();
+         this.rollForStartStarted = true;
+      }
+
       return (
 <Container>
    <Item>
       <Player
       player="0"
-      isCurrent={"0" === this.props.ctx.currentPlayer}
+      dice={this.props.ctx.currentPlayer === "0" ? this.props.G.dice.filter(Boolean).join(", ") : ""}
+      number={this.props.G.numbers[0]}
       />
    </Item>
    <Item center>
       <div>
          <FullHeightContainer column center alignItems="center">
             <Button
-            disabled={!this.props.isActive}
+            disabled={!this.props.isActive || this.props.G.dice.length !== 0}
             color={ "0" === this.props.ctx.currentPlayer ? "primary" : "secondary" }
             size="large"
             variant="contained"
-            onClick={this.getButtonAction()}
+            onClick={this.handleStartDiceRoll}
             >
-               {this.getButtonText()}
+               Roll Dice
             </Button>
          </FullHeightContainer>
          <DiceDialog {...this.props} />
@@ -70,7 +67,8 @@ class PlayersControls extends React.Component {
    <Item>
       <Player
       player="1"
-      isCurrent={"1" === this.props.ctx.currentPlayer}
+      dice={this.props.ctx.currentPlayer === "1" ? this.props.G.dice.filter(Boolean).join(", ") : ""}
+      number={this.props.G.numbers[1]}
       />
    </Item>
 </Container>

@@ -7,7 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Player from "./player";
 
-// TODO win is not shown for player 2
 class Congratulations extends Component {
   state = {
     open: false

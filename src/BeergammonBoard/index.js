@@ -20,8 +20,8 @@ export class BeergammonBoard extends React.Component {
    state = {
       isLoadingNames: false,
       playersNames: {
-        [0]: "Alice",
-        [1]: "Bob"
+        0: "Alice",
+        1: "Bob"
       }
     };
 

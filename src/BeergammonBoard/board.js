@@ -1,4 +1,5 @@
 import React from 'react';
+import colors from '../colors';
 
 export class Board extends React.Component {
 
@@ -111,12 +112,12 @@ export class Board extends React.Component {
    }
 
    blackPiece = {
-      background: "#375E97",
+      background: colors["0"],
       color: "white"
    }
 
    whitePiece = {
-      background: "#FB6542",
+      background: colors["1"],
       color: "white",
    }
 
@@ -146,7 +147,7 @@ export class Board extends React.Component {
    }
 
    onClick(section, id) {
-      if (!this.props.G.dice.every(element => element === null)) {
+      if (this.props.G.dice !== null) {
          this.props.moves.clickCell(section, id);
       }
    }
