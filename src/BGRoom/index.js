@@ -49,7 +49,6 @@ class StyledRoom extends Component {
         <AlignLeftItem flex={3}>
           <Chip label={name} />
         </AlignLeftItem>
-        {/* TODO try smth better than vs */}
         <AlignRightItem flex={2}>{players[0].name || "..."}</AlignRightItem>
         <AlignCenterItem flex={2}>
           <IconButton disabled>

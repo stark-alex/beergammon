@@ -4,6 +4,7 @@ import './App.css';
 
 import React, { Component } from 'react';
 import Routes from './Routes';
+import colors from './colors';
 
 import { createMuiTheme } from "@material-ui/core/styles";
 import { MuiThemeProvider } from "@material-ui/core";
@@ -19,8 +20,8 @@ const theme = {
       gray: "#DDDDDD",
       green: "#00FF00",
       red: "#FF0000",
-      player1: "#375E97",
-      player2: "#FB6542"
+      player1: colors["0"],
+      player2: colors["1"],
    }
 };
 
