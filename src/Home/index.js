@@ -25,7 +25,7 @@ const HomePage = () => (
             <PlayIcon />
             <ButtonText>Start Game</ButtonText>
          </Button>
-         <Button variant="extended" color="primary" component={Link} to="/game">
+         <Button variant="extended" color="secondary" component={Link} to="/game">
             <PlayIcon />
             <ButtonText>Start Local Game</ButtonText>
          </Button>

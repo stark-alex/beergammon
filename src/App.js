@@ -15,13 +15,10 @@ import styled from "styled-components";
 
 const theme = {
    colors: {
-      white: "#FFFFFF",
-      yellow: "#FFFF00",
-      gray: "#DDDDDD",
-      green: "#00FF00",
-      red: "#FF0000",
       player1: colors["0"],
       player2: colors["1"],
+      white: "#FFFFFF",
+      background: colors["background"],
    }
 };
 
@@ -29,11 +26,11 @@ const muiTheme = createMuiTheme({
    palette: {
       primary: {
          main: theme.colors.player1,
-         contrastText: theme.colors.white
+         contrastText: theme.colors.white,
       },
       secondary: {
          main: theme.colors.player2,
-         contrastText: theme.colors.white
+         contrastText: theme.colors.white,
       }
    }
 });
