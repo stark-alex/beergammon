@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { Container, Item } from "../Grid";
 
 import DiceDialog from "./dicedialog";
+import AceyDeuceyDialog from "./aceydeuceydialog";
 import Player from "./player";
 
 
@@ -28,7 +29,7 @@ class PlayersControls extends React.Component {
 
    handleStartDiceRoll = () => {
       this.props.moves.startDiceRoll();
-    };
+   };
 
    render() {
       if (!this.rollForNumbersStarted && this.props.ctx.phase === 'rollForNumbers' && this.props.G.rollingDice === null) {
@@ -62,6 +63,7 @@ class PlayersControls extends React.Component {
             </Button>
          </FullHeightContainer>
          <DiceDialog {...this.props} />
+         <AceyDeuceyDialog {...this.props} />
       </div>
    </Item>
    <Item>
