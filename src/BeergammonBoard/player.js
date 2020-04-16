@@ -41,7 +41,7 @@ const Player = ({
             }
             title={playerName}
           />
-          <CardContent>Dice: {dice}</CardContent>
+          <CardContent>Current Moves: {dice}</CardContent>
           <CardContent>Number: {number}</CardContent>
         </DetachedCard>
       );

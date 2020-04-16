@@ -132,7 +132,7 @@ class DiceDialog extends Component {
     return (
       <Fragment>
         <Dialog open={this.state.open} fullWidth>
-         <DialogTitle >{this.getPhaseTitle()}</DialogTitle>
+         <DialogTitle>{this.getPhaseTitle()}</DialogTitle>
           {/* Dice component is mounted again when dialog is open 
           cause of required dice init logic in componentDidMount */}
           {this.state.open && this.props.G.rollingDice && (

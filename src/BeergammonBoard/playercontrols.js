@@ -27,8 +27,16 @@ class PlayersControls extends React.Component {
       rollForStartStarted: false,
    };
 
+   getDiceString() {
+      return this.props.G.dice.includes(12) ? "Acey Deucey!" : this.props.G.dice.filter(Boolean).join(", ")
+   }
+
    handleStartDiceRoll = () => {
       this.props.moves.startDiceRoll();
+   };
+
+   handleOverrideStartDiceRoll = () => {
+      this.props.moves.startOverrideDiceRoll();
    };
 
    render() {
@@ -45,7 +53,7 @@ class PlayersControls extends React.Component {
    <Item>
       <Player
       player="0"
-      dice={this.props.ctx.currentPlayer === "0" ? this.props.G.dice.filter(Boolean).join(", ") : ""}
+      dice={this.props.ctx.currentPlayer === "0" ? this.getDiceString() : ""}
       number={this.props.G.numbers[0]}
       />
    </Item>
@@ -61,6 +69,17 @@ class PlayersControls extends React.Component {
             >
                Roll Dice
             </Button>
+            {/* button for debugging
+            <Button
+            disabled={!this.props.isActive || this.props.G.dice.length !== 0}
+            color={ "0" === this.props.ctx.currentPlayer ? "primary" : "secondary" }
+            size="large"
+            variant="contained"
+            onClick={this.handleOverrideStartDiceRoll}
+            >
+               Roll Override
+            </Button>
+            */}
          </FullHeightContainer>
          <DiceDialog {...this.props} />
          <AceyDeuceyDialog {...this.props} />
@@ -69,7 +88,7 @@ class PlayersControls extends React.Component {
    <Item>
       <Player
       player="1"
-      dice={this.props.ctx.currentPlayer === "1" ? this.props.G.dice.filter(Boolean).join(", ") : ""}
+      dice={this.props.ctx.currentPlayer === "1" ? this.getDiceString() : ""}
       number={this.props.G.numbers[1]}
       />
    </Item>
