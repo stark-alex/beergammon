@@ -6,11 +6,10 @@
 * drinks
 * pokey
 * end game
-* colors!
-* players names
 
 ## Delighters 
 
+* players names (in game)
 * undo
 * drinks per turn graph
 * pro-mode
