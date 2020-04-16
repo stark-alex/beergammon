@@ -1,10 +1,17 @@
 import React from 'react';
 import colors from '../colors';
+import './board.css';
 
 export class Board extends React.Component {
 
+   boardStyle = {
+      whiteSpace: "nowrap",
+      minWidth: "700px"
+   }
+
    columnStyle = {
-      float: "left"
+      display: "inline-block",
+      background: colors["background"]
    };
 
    rowStyle = {
@@ -12,21 +19,19 @@ export class Board extends React.Component {
    }
 
    homeStyle = {
-      border: '1px solid #555',
       width: '50px',
       height: '200px',
       lineHeight: '50px',
       textAlign: 'center',
-      backgroundColor: '#D3D3D3',
+      backgroundColor: colors['boardDark'],
    };
 
    pokeyStyle = {
-      border: '1px solid #555',
       width: '50px',
-      height: '50px',
+      height: '200px',
       lineHeight: '50px',
       textAlign: 'center',
-      backgroundColor: '#D3D3D3',
+      backgroundColor: colors['boardDark'],
    };
 
    pointStyle = {
@@ -38,23 +43,23 @@ export class Board extends React.Component {
    };
 
    bottomTriangleDark = {
-      backgroundColor: '#808080',
+      backgroundColor: colors['boardLight'],
       clipPath: "polygon(50% 0, 0 100%, 100% 100%)"
    };
 
    bottomTriangleLight = {
-      backgroundColor: '#DCDCDC',
+      backgroundColor: colors['boardDark'],
       clipPath: "polygon(50% 0, 0 100%, 100% 100%)"
    }
 
    topTriangleDark = {
-      backgroundColor: '#808080',
+      backgroundColor: colors['boardLight'],
       clipPath: "polygon(50% 100%, 0 0, 100% 0)"
    };
 
    topTriangleLight = {
-      backgroundColor: '#DCDCDC',
-      clipPath: "polygon(50% 100%, 0 0, 100% 0)"
+      backgroundColor: colors['boardDark'],
+      clipPath: "polygon(50% 100%, 0 0, 100% 0)",
    };
 
    bottomPointLight = {...this.pointStyle,...this.bottomTriangleLight};
@@ -104,11 +109,15 @@ export class Board extends React.Component {
    };
 
    topPointPiecePosition = {
-      top: "-80px",
+      top: "0px",
    }
 
    bottomPointPiecePosition = {
-      top: "80px",
+      top: "160px",
+   }
+
+   homePokeyPiecePosition = {
+      top: "80px"
    }
 
    blackPiece = {
@@ -140,9 +149,9 @@ export class Board extends React.Component {
             }
          } 
       } else if (color === "b") {
-         return this.blackPiece;
+         return {...this.blackPiece, ...this.homePokeyPiecePosition};
       } else {
-         return this.whitePiece;
+         return {...this.whitePiece, ...this.homePokeyPiecePosition};
       }
    }
 
@@ -162,65 +171,67 @@ export class Board extends React.Component {
             const id = 12 * i + j
             if (j < 6) {
                leftPoints.push(
-                  <td style={this.getPointStyle(i,j)} key={id} onClick={() => this.onClick("points", id)}>
+                  <div class="divTableCell" style={this.getPointStyle(i,j)} key={id} onClick={() => this.onClick("points", id)}>
                      {this.getSpotPiece("points", id, i)}
-                  </td>
+                  </div>
                );
             } else {
                rightPoints.push(
-                  <td style={this.getPointStyle(i,j)} key={id} onClick={() => this.onClick("points", id)}>
+                  <div class="divTableCell" style={this.getPointStyle(i,j)} key={id} onClick={() => this.onClick("points", id)}>
                      {this.getSpotPiece("points", id, i)}
-                  </td>
+                  </div>
                );
             }
          }
-         leftPointsBody.push(<tr key="0" style={this.rowStyle}>{leftPoints}</tr>);
-         rightPointsBody.push(<tr key="1" style={this.rowStyle}>{rightPoints}</tr>);
+         leftPointsBody.push(<div class="divTableRow" key="0" style={this.rowStyle}>{leftPoints}</div>);
+         rightPointsBody.push(<div class="divTableRow" key="1" style={this.rowStyle}>{rightPoints}</div>);
       }
 
       return (
-<React.Fragment>
-   <div style={this.columnStyle} class="column">
-      <table id="home">
-         <tbody>
-            <tr key="home0">
-               <td style={this.homeStyle} key="0" onClick={() => this.onClick("home", 0)}>
-                  {this.getSpotPiece("home", 0, 0)}
-               </td>
-            </tr>
-            <tr key="home1">
-               <td style={this.homeStyle} key="1" onClick={() => this.onClick("home", 1)}>
-                  {this.getSpotPiece("home", 1, 1)}
-               </td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
-   <div style={this.columnStyle} class="column">
-      <table id="leftBoard">
-         <tbody>{leftPointsBody}</tbody>
-      </table>
-   </div>
-   <div style={this.columnStyle} class="column">
-      <table id="pokey">
-         <tbody>
-            <tr key="pokey0">
-               <td style={this.pokeyStyle} key="0" onClick={() => this.onClick("pokey", 0)}>
-                  {this.getSpotPiece("pokey", 0, 0)}
-               </td>
-            </tr>
-            <tr key="pokey1">
-               <td style={this.pokeyStyle} key="1" onClick={() => this.onClick("pokey", 1)}>
-                  {this.getSpotPiece("pokey", 1, 1)}
-               </td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
-   <div style={this.columnStyle} class="column">
-      <table id="rightBoard">
-         <tbody>{rightPointsBody}</tbody>
-      </table>
+   <React.Fragment>
+      <div style={this.boardStyle}>
+      <div style={this.columnStyle} class="column">
+         <div class="divTable" id="home">
+            <div class="divTableBody">
+               <div class="divTableRow" key="home0">
+                  <div class="divTableCell" style={this.homeStyle} key="0" onClick={() => this.onClick("home", 0)}>
+                     {this.getSpotPiece("home", 0, 0)}
+                  </div>
+               </div>
+               <div class="divTableRow" key="home1">
+                  <div class="divTableCell" style={this.homeStyle} key="1" onClick={() => this.onClick("home", 1)}>
+                     {this.getSpotPiece("home", 1, 1)}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div style={this.columnStyle} class="column">
+         <div class="divTable" id="leftBoard">
+            <div class="divTableBody">{leftPointsBody}</div>
+         </div>
+      </div>
+      <div style={this.columnStyle} class="column">
+         <div class="divTable" id="pokey">
+            <div class="divTableBody">
+               <div class="divTableRow" key="pokey0">
+                  <div class="divTableCell" style={this.pokeyStyle} key="0" onClick={() => this.onClick("pokey", 0)}>
+                     {this.getSpotPiece("pokey", 0, 0)}
+                  </div>
+               </div>
+               <div class="divTableRow" key="pokey1">
+                  <div class="divTableCell" style={this.pokeyStyle} key="1" onClick={() => this.onClick("pokey", 1)}>
+                     {this.getSpotPiece("pokey", 1, 1)}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div style={this.columnStyle} class="column">
+         <div class="divTable" id="rightBoard">
+            <div class="divTableBody">{rightPointsBody}</div>
+         </div>
+      </div>
    </div>
 </React.Fragment>
       )
