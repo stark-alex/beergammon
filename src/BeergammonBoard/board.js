@@ -67,36 +67,6 @@ export class Board extends React.Component {
    topPointLight = {...this.pointStyle,...this.topTriangleLight};
    topPointDark = {...this.pointStyle,...this.topTriangleDark};
 
-   getPointStyle(i,j) {
-      if (i === 0) {
-         if (j % 2 === 0) {
-            return this.topPointLight;
-         } else {
-            return this.topPointDark;
-         }
-      } else {
-         if (j % 2 === 0) {
-            return this.bottomPointDark;
-         } else {
-            return this.bottomPointLight;
-         }
-      }
-   }
-
-   getSpotPiece(section, id, row) {
-      let sectionArray = [];
-      if (section === "points") {
-         sectionArray = this.props.G.points;
-      } else if (section === "home") {
-         sectionArray = this.props.G.home;
-      } else if (section === "pokey") {
-         sectionArray = this.props.G.pokey;
-      }
-      let spot = sectionArray[id]
-      if (spot) return <div style={this.getPieceStyle(section,row,spot.color)}>{spot.count}</div>
-      return "";
-   }
-
    piece = {
       position: "relative",
       textAlign: "center",
@@ -133,59 +103,83 @@ export class Board extends React.Component {
    blackPiece = {...this.piece,...this.blackPiece};
    whitePiece = {...this.piece,...this.whitePiece};
 
-   getPieceStyle(section, row, color) {
-      if (section === "points") {
-         if (color === "b") {
-            if (row === 0) {
-               return {...this.blackPiece,...this.topPointPiecePosition};
-            } else {
-               return {...this.blackPiece, ...this.bottomPointPiecePosition};
-            }
-         } else if (color === "w") {
-            if (row === 0) {
-               return {...this.whitePiece, ...this.topPointPiecePosition};
-            } else {
-               return {...this.whitePiece, ...this.bottomPointPiecePosition};
-            }
-         } 
-      } else if (color === "b") {
-         return {...this.blackPiece, ...this.homePokeyPiecePosition};
-      } else {
-         return {...this.whitePiece, ...this.homePokeyPiecePosition};
+   pieces = [
+      {...this.piece,...this.blackPiece},
+      {...this.piece,...this.whitePiece},
+   ]
+
+   onClick(id) {
+      if (this.props.G.dice !== null) {
+         this.props.moves.clickCell(id);
       }
    }
 
-   onClick(section, id) {
-      if (this.props.G.dice !== null) {
-         this.props.moves.clickCell(section, id);
+   getSpotPiece(id) {
+      let spot = this.props.G.spots[id]
+      if (spot) {
+         let pieceStyle = null;
+         if (id === 0 || id === 25 || id === 26 || id == 27) {
+            // Home and Pokey's get the same style.
+            pieceStyle = {...this.pieces[spot.player], ...this.homePokeyPiecePosition};
+         } else if (id < 13) {
+            // Top row points
+            pieceStyle = {...this.pieces[spot.player], ...this.topPointPiecePosition};
+         } else {
+            // Bottom row points
+            pieceStyle = {...this.pieces[spot.player], ...this.bottomPointPiecePosition};
+         }
+         return <div style={pieceStyle}>{spot.count}</div>
       }
+      return "";
    }
 
    render() {
       let leftPointsBody = [];
       let rightPointsBody = [];
-      for (let i = 0; i < 2; i++) {
-         let leftPoints = [];
-         let rightPoints = [];
-         for (let j = 0; j < 12; j++) {
-            const id = 12 * i + j
-            if (j < 6) {
-               leftPoints.push(
-                  <div class="divTableCell" style={this.getPointStyle(i,j)} key={id} onClick={() => this.onClick("points", id)}>
-                     {this.getSpotPiece("points", id, i)}
-                  </div>
-               );
-            } else {
-               rightPoints.push(
-                  <div class="divTableCell" style={this.getPointStyle(i,j)} key={id} onClick={() => this.onClick("points", id)}>
-                     {this.getSpotPiece("points", id, i)}
-                  </div>
-               );
-            }
-         }
-         leftPointsBody.push(<div class="divTableRow" key="0" style={this.rowStyle}>{leftPoints}</div>);
-         rightPointsBody.push(<div class="divTableRow" key="1" style={this.rowStyle}>{rightPoints}</div>);
+
+      let topLeftPoints = [];
+      for (let i = 1; i < 7; i++) {
+         let pointStyle = i % 2 === 0 ? this.topPointLight : this.topPointDark;
+         topLeftPoints.push(
+            <div class="divTableCell" style={pointStyle} key={i} onClick={() => this.onClick(i)}>
+               {this.getSpotPiece(i)}
+            </div>
+         );
       }
+      leftPointsBody.push(<div class="divTableRow" key="0" style={this.rowStyle}>{topLeftPoints}</div>);
+
+      let topRightPoints = [];
+      for (let i = 7; i < 13; i++) {
+         let pointStyle = i % 2 === 0 ? this.topPointLight : this.topPointDark;
+         topRightPoints.push(
+            <div class="divTableCell" style={pointStyle} key={i} onClick={() => this.onClick(i)}>
+               {this.getSpotPiece(i)}
+            </div>
+         );
+      }
+      rightPointsBody.push(<div class="divTableRow" key="1" style={this.rowStyle}>{topRightPoints}</div>);
+
+      let bottomRightPoints = [];
+      for (let i = 18; i > 12; i--) {
+         let pointStyle = i % 2 === 0 ? this.bottomPointLight : this.bottomPointDark;
+         bottomRightPoints.push(
+            <div class="divTableCell" style={pointStyle} key={i} onClick={() => this.onClick(i)}>
+               {this.getSpotPiece(i)}
+            </div>
+         );
+      }
+      rightPointsBody.push(<div class="divTableRow" key="1" style={this.rowStyle}>{bottomRightPoints}</div>);
+
+      let bottomLeftPoints = [];
+      for (let i = 24; i > 18; i--) {
+         let pointStyle = i % 2 === 0 ? this.bottomPointLight : this.bottomPointDark;
+         bottomLeftPoints.push(
+            <div class="divTableCell" style={pointStyle} key={i} onClick={() => this.onClick(i)}>
+               {this.getSpotPiece(i)}
+            </div>
+         );
+      }
+      leftPointsBody.push(<div class="divTableRow" key="0" style={this.rowStyle}>{bottomLeftPoints}</div>);
 
       return (
    <React.Fragment>
@@ -194,13 +188,13 @@ export class Board extends React.Component {
          <div class="divTable" id="home">
             <div class="divTableBody">
                <div class="divTableRow" key="home0">
-                  <div class="divTableCell" style={this.homeStyle} key="0" onClick={() => this.onClick("home", 0)}>
-                     {this.getSpotPiece("home", 0, 0)}
+                  <div class="divTableCell" style={this.homeStyle} key="0" onClick={() => this.onClick(0)}>
+                     {this.getSpotPiece(0)}
                   </div>
                </div>
                <div class="divTableRow" key="home1">
-                  <div class="divTableCell" style={this.homeStyle} key="1" onClick={() => this.onClick("home", 1)}>
-                     {this.getSpotPiece("home", 1, 1)}
+                  <div class="divTableCell" style={this.homeStyle} key="25" onClick={() => this.onClick(25)}>
+                     {this.getSpotPiece(25)}
                   </div>
                </div>
             </div>
@@ -215,13 +209,13 @@ export class Board extends React.Component {
          <div class="divTable" id="pokey">
             <div class="divTableBody">
                <div class="divTableRow" key="pokey0">
-                  <div class="divTableCell" style={this.pokeyStyle} key="0" onClick={() => this.onClick("pokey", 0)}>
-                     {this.getSpotPiece("pokey", 0, 0)}
+                  <div class="divTableCell" style={this.pokeyStyle} key="26" onClick={() => this.onClick(26)}>
+                     {this.getSpotPiece(26)}
                   </div>
                </div>
                <div class="divTableRow" key="pokey1">
-                  <div class="divTableCell" style={this.pokeyStyle} key="1" onClick={() => this.onClick("pokey", 1)}>
-                     {this.getSpotPiece("pokey", 1, 1)}
+                  <div class="divTableCell" style={this.pokeyStyle} key="27" onClick={() => this.onClick(26)}>
+                     {this.getSpotPiece(27)}
                   </div>
                </div>
             </div>
