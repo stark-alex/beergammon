@@ -15,7 +15,7 @@ class AceyDeuceyDialog extends Component {
    numbers = [1, 2, 3, 4, 5, 6];
 
    componentDidUpdate(prevProps) {
-      if (!this.state.open && this.props.ctx.phase === 'play' && this.props.G.dice.includes(12)) {
+      if (!this.state.open && this.props.isActive && this.props.ctx.phase === 'play' && this.props.G.dice.includes(12)) {
          this.setState({ open: true });
       }
    }
