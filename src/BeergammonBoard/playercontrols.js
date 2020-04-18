@@ -1,19 +1,21 @@
 import React from "react";
 
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
+import Fab from "@material-ui/core/Fab";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
+
 import { Container, Item } from "../Grid";
 
 import DiceDialog from "./dicedialog";
 import AceyDeuceyDialog from "./aceydeuceydialog";
 import Player from "./player";
 
-
-export const FixedSizePaper = styled(Paper)`
+const Button = styled(Fab)`
   && {
-    height: ${props => props.height};
-    width: ${props => props.width};
+    margin: 24px;
   }
 `;
 
@@ -60,25 +62,29 @@ class PlayersControls extends React.Component {
    <Item center>
       <div>
          <FullHeightContainer column center alignItems="center">
-            <Button
-            disabled={!this.props.isActive || this.props.G.dice.length !== 0}
-            color={ "0" === this.props.ctx.currentPlayer ? "primary" : "secondary" }
-            size="large"
-            variant="contained"
-            onClick={this.handleStartDiceRoll}
-            >
-               Roll Dice
-            </Button>
+            <Item>
+               <Button
+               disabled={!this.props.isActive || this.props.G.dice.length !== 0}
+               color={ "0" === this.props.ctx.currentPlayer ? "primary" : "secondary" }
+               size="large"
+               variant="extended"
+               onClick={this.handleStartDiceRoll}
+               >
+                  Roll Dice
+               </Button>
+            </Item>
             {/* button for debugging
-            <Button
-            disabled={!this.props.isActive || this.props.G.dice.length !== 0}
-            color={ "0" === this.props.ctx.currentPlayer ? "primary" : "secondary" }
-            size="large"
-            variant="contained"
-            onClick={this.handleOverrideStartDiceRoll}
-            >
-               Roll Override
-            </Button>
+            <Item>
+               <Button
+               disabled={!this.props.isActive || this.props.G.dice.length !== 0}
+               color={ "0" === this.props.ctx.currentPlayer ? "primary" : "secondary" }
+               size="large"
+               variant="extended"
+               onClick={this.handleOverrideStartDiceRoll}
+               >
+                  Roll Override
+               </Button>
+            </Item>
             */}
          </FullHeightContainer>
          <DiceDialog {...this.props} />
@@ -91,6 +97,14 @@ class PlayersControls extends React.Component {
       dice={this.props.ctx.currentPlayer === "1" ? this.getDiceString() : ""}
       number={this.props.G.numbers[1]}
       />
+   </Item>
+   <Item>
+      <Card>
+         <CardHeader title="Socials" />
+         <Grid container justify="center">
+            <CardContent>{this.props.G.socials.filter(Boolean).join(", ")}</CardContent>
+         </Grid>
+      </Card>
    </Item>
 </Container>
       )

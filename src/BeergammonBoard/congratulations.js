@@ -5,7 +5,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Player from "./player";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 
 class Congratulations extends Component {
   state = {
@@ -13,13 +14,13 @@ class Congratulations extends Component {
   };
 
   componentDidMount() {
-    if (this.props.gameover) {
+    if (this.props.winner) {
       this.handleOpen();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.gameover && prevProps.gameover !== this.props.gameover) {
+    if (this.props.winner && prevProps.winner !== this.props.winner) {
       this.handleOpen();
     }
   }
@@ -38,16 +39,18 @@ class Congratulations extends Component {
 
   render() {
     const { open } = this.state;
-    const { gameover } = this.props;
+    const { winner } = this.props;
 
     return (
       <Dialog open={open} fullWidth onClose={this.handleClose}>
-         {gameover && (
+         {winner && (
             <DialogTitle>Winner</DialogTitle>
          )}
-         {gameover && (
+         {winner && (
             <DialogContent>
-               <Player player={gameover.winner} />
+               <Grid container justify="center">
+                  <CardContent>Player {winner} Wins!</CardContent>
+               </Grid>
             </DialogContent>
          )}
          <DialogActions>

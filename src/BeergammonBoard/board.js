@@ -116,9 +116,9 @@ export class Board extends React.Component {
 
    getSpotPiece(id) {
       let spot = this.props.G.spots[id]
-      if (spot) {
+      if (spot.player >= 0) {
          let pieceStyle = null;
-         if (id === 0 || id === 25 || id === 26 || id == 27) {
+         if (id === 0 || id === 25 || id === 26 || id === 27 || id === 28 || id === 29) {
             // Home and Pokey's get the same style.
             pieceStyle = {...this.pieces[spot.player], ...this.homePokeyPiecePosition};
          } else if (id < 13) {
@@ -189,12 +189,12 @@ export class Board extends React.Component {
             <div class="divTableBody">
                <div class="divTableRow" key="home0">
                   <div class="divTableCell" style={this.homeStyle} key="0" onClick={() => this.onClick(0)}>
-                     {this.getSpotPiece(0)}
+                     {this.getSpotPiece(0)}{this.getSpotPiece(28)}
                   </div>
                </div>
                <div class="divTableRow" key="home1">
                   <div class="divTableCell" style={this.homeStyle} key="25" onClick={() => this.onClick(25)}>
-                     {this.getSpotPiece(25)}
+                     {this.getSpotPiece(25)}{this.getSpotPiece(29)}
                   </div>
                </div>
             </div>
@@ -214,7 +214,7 @@ export class Board extends React.Component {
                   </div>
                </div>
                <div class="divTableRow" key="pokey1">
-                  <div class="divTableCell" style={this.pokeyStyle} key="27" onClick={() => this.onClick(26)}>
+                  <div class="divTableCell" style={this.pokeyStyle} key="27" onClick={() => this.onClick(27)}>
                      {this.getSpotPiece(27)}
                   </div>
                </div>
