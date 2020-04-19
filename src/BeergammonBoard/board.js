@@ -2,6 +2,20 @@ import React from 'react';
 import colors from '../colors';
 import './board.css';
 
+
+import {
+   PLAYER_0_POKEY,
+   PLAYER_1_POKEY,
+   POKEYS,
+   PLAYER_0_HOME,
+   PLAYER_1_HOME,
+   HOMES,
+   PLAYER_0_START,
+   PLAYER_1_START,
+   STARTS,
+ } from "beergammon-game/constants";
+ 
+
 export class Board extends React.Component {
 
    boardStyle = {
@@ -118,7 +132,7 @@ export class Board extends React.Component {
       let spot = this.props.G.spots[id]
       if (spot.player >= 0) {
          let pieceStyle = null;
-         if (id === 0 || id === 25 || id === 26 || id === 27 || id === 28 || id === 29) {
+         if (STARTS.includes(id) || HOMES.includes(id) || POKEYS.includes(id)) {
             // Home and Pokey's get the same style.
             pieceStyle = {...this.pieces[spot.player], ...this.homePokeyPiecePosition};
          } else if (id < 13) {
@@ -188,13 +202,13 @@ export class Board extends React.Component {
          <div class="divTable" id="home">
             <div class="divTableBody">
                <div class="divTableRow" key="home0">
-                  <div class="divTableCell" style={this.homeStyle} key="0" onClick={() => this.onClick(0)}>
-                     {this.getSpotPiece(0)}{this.getSpotPiece(28)}
+                  <div class="divTableCell" style={this.homeStyle} key={PLAYER_0_START} onClick={() => this.onClick(PLAYER_0_START)}>
+                     {this.getSpotPiece(PLAYER_0_START)}{this.getSpotPiece(PLAYER_0_HOME)}
                   </div>
                </div>
                <div class="divTableRow" key="home1">
-                  <div class="divTableCell" style={this.homeStyle} key="25" onClick={() => this.onClick(25)}>
-                     {this.getSpotPiece(25)}{this.getSpotPiece(29)}
+                  <div class="divTableCell" style={this.homeStyle} key={PLAYER_1_START} onClick={() => this.onClick(PLAYER_1_START)}>
+                     {this.getSpotPiece(PLAYER_1_START)}{this.getSpotPiece(PLAYER_1_HOME)}
                   </div>
                </div>
             </div>
@@ -209,13 +223,13 @@ export class Board extends React.Component {
          <div class="divTable" id="pokey">
             <div class="divTableBody">
                <div class="divTableRow" key="pokey0">
-                  <div class="divTableCell" style={this.pokeyStyle} key="26" onClick={() => this.onClick(26)}>
-                     {this.getSpotPiece(26)}
+                  <div class="divTableCell" style={this.pokeyStyle} key={PLAYER_0_POKEY} onClick={() => this.onClick(PLAYER_0_POKEY)}>
+                     {this.getSpotPiece(PLAYER_0_POKEY)}
                   </div>
                </div>
                <div class="divTableRow" key="pokey1">
-                  <div class="divTableCell" style={this.pokeyStyle} key="27" onClick={() => this.onClick(27)}>
-                     {this.getSpotPiece(27)}
+                  <div class="divTableCell" style={this.pokeyStyle} key={PLAYER_1_POKEY} onClick={() => this.onClick(PLAYER_1_POKEY)}>
+                     {this.getSpotPiece(PLAYER_1_POKEY)}
                   </div>
                </div>
             </div>
