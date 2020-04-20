@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import axios from "axios";
 
 import PlayersControls from './playercontrols';
 import PlayersNamesContext from './playersNamesContext'
@@ -20,10 +21,38 @@ export class BeergammonBoard extends React.Component {
    state = {
       isLoadingNames: false,
       playersNames: {
-        0: "Player 1",
-        1: "Player 2"
+        0: "Fred",
+        1: "George"
       }
-    };
+   };
+
+   componentDidMount() {
+      // No names to load from the server if not in muti-player mode.
+      if (!this.props.isMultiplayer || !this.props.gameID) {
+        return;
+      }
+
+      this.setState({ isLoadingNames: true });
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/games/beergammon`)
+        .then(response => {
+          const room =
+            response.data &&
+            response.data.rooms.find(
+              room => room.gameID === this.props.gameID
+            );
+          if (!room) {
+            return;
+          }
+          this.setState({
+            playersNames: room.players.reduce((object, player) => {
+              object[`${player.id}`] = player.name;
+              return object;
+            }, {})
+          });
+        })
+        .finally(() => this.setState({ isLoadingNames: false }));
+    }
 
    render() {
       return (
