@@ -17,7 +17,7 @@ class DiceDialog extends Component {
          return this.props.moves.finishRollForNumbers();
       } else if (this.props.isActive && this.props.ctx.phase === 'startGame') {
          return  this.props.moves.finishRollForStart();
-      } else if (this.props.ctx.phase === 'play') {
+      } else if (this.props.isActive && this.props.ctx.phase === 'play') {
          return this.props.moves.finishDiceRoll();
       }
    }
