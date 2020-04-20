@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
     "beergammon-game": "^0.1.9",
     "boardgame.io": "^0.39.4",
     "cannon": "^0.6.2",
