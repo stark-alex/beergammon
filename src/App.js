@@ -63,7 +63,9 @@ class App extends Component {
             
             <MuiThemeProvider theme={muiTheme}>
                <ThemeProvider theme={theme}>
-                  <SnackbarProvider maxSnack={10}>
+                  <SnackbarProvider maxSnack={10} iconVariant={{
+                     default: '🍺',
+                  }}>
                      <div>
                         <AppBar>
                            <Toolbar>

@@ -57,13 +57,16 @@ class Drink extends Component {
                      msg = "Social!";
                     break;
                   case DrinkReason.NUMBER:
-                     msg = this.state.playersNames[drink.player] + " drink for your number.";
+                     msg = this.state.playersNames[drink.player] + ", drink for your number.";
                      break;
                   case DrinkReason.DOUBLES:
-                     msg = this.state.playersNames[drink.player] + " drink for doubles."
+                     msg = this.state.playersNames[drink.player] + ", drink for doubles.";
                      break;
                   case DrinkReason.CANT_MOVE:
-                     msg = this.state.playersNames[drink.player] + " drink " + drink.count + " because you can't move."
+                     msg = this.state.playersNames[drink.player] + ", drink " + drink.count + " because you can't move.";
+                     break;
+                  default:
+                     msg = "You shouldn't see this, everyone drink!";
                      break;
                   }
 

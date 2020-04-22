@@ -65,6 +65,7 @@ export class BeergammonBoard extends React.Component {
                   <Board {...this.props} />
                </Item>
             </Container>
+            <Congratulations {...this.props} />
          </PlayersNamesContext.Provider>
       )
    }

@@ -8,19 +8,15 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 
+import PlayersNamesContext from "./playersNamesContext";
+
 class Congratulations extends Component {
   state = {
     open: false
   };
 
-  componentDidMount() {
-    if (this.props.winner) {
-      this.handleOpen();
-    }
-  }
-
   componentDidUpdate(prevProps) {
-    if (this.props.winner && prevProps.winner !== this.props.winner) {
+    if (this.props.ctx.gameover && !prevProps.ctx.gameover) {
       this.handleOpen();
     }
   }
@@ -38,30 +34,34 @@ class Congratulations extends Component {
   };
 
   render() {
-    const { open } = this.state;
-    const { winner } = this.props;
-
-    return (
-      <Dialog open={open} fullWidth onClose={this.handleClose}>
-         {winner && (
-            <DialogTitle>Winner</DialogTitle>
-         )}
-         {winner && (
-            <DialogContent>
-               <Grid container justify="center">
-                  <CardContent>Player {winner} Wins!</CardContent>
-               </Grid>
-            </DialogContent>
-         )}
-         <DialogActions>
-            <Button
-               variant="contained"
-               color="primary"
-               onClick={this.handleClose}>ok</Button>
-         </DialogActions>
-         </Dialog>
-      );
-   }
+      return (
+         <PlayersNamesContext.Consumer>
+            {playersNames => {
+               const playerName = this.props.ctx.gameover && playersNames[this.props.ctx.gameover.winner];
+               return (
+                  <Dialog open={this.state.open} fullWidth onClose={this.handleClose}>
+                     {this.props.ctx.gameover && (
+                        <DialogTitle>Winner</DialogTitle>
+                     )}
+                     {this.props.ctx.gameover && (
+                        <DialogContent>
+                           <Grid container justify="center">
+                              <CardContent>{playerName} Wins!</CardContent>
+                           </Grid>
+                        </DialogContent>
+                     )}
+                     <DialogActions>
+                        <Button
+                           variant="contained"
+                           color="primary"
+                           onClick={this.handleClose}>ok</Button>
+                     </DialogActions>
+                  </Dialog>
+               );
+            }}
+         </PlayersNamesContext.Consumer>
+     );
+  }
 }
 
 export default Congratulations;
