@@ -5,7 +5,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Dices3d, { DICE_TYPES } from "../Dice";
 
 import colors from "../colors";
-import { SrcAlphaSaturateFactor } from "three";
 
 class DiceDialog extends Component {
    state = {

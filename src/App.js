@@ -1,5 +1,4 @@
 //import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import React, { Component } from 'react';
@@ -12,6 +11,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ThemeProvider } from "styled-components";
 import styled from "styled-components";
+import { SnackbarProvider } from 'notistack';
 
 const theme = {
    colors: {
@@ -60,17 +60,20 @@ class App extends Component {
    render() {
       return (
          <div>
+            
             <MuiThemeProvider theme={muiTheme}>
                <ThemeProvider theme={theme}>
-                  <div>
-                     <AppBar>
-                        <Toolbar>
-                           <Logo>Beergammon (beta 0.1.9)</Logo>
-                        </Toolbar>
-                     </AppBar>
-                  </div>
-                  <FixedAppBarMargin>{this.props.children}</FixedAppBarMargin>
-                  <Routes />
+                  <SnackbarProvider maxSnack={10}>
+                     <div>
+                        <AppBar>
+                           <Toolbar>
+                              <Logo>Beergammon (beta 0.1.9)</Logo>
+                           </Toolbar>
+                        </AppBar>
+                     </div>
+                     <FixedAppBarMargin>{this.props.children}</FixedAppBarMargin>
+                     <Routes />
+                  </SnackbarProvider>
                </ThemeProvider>
             </MuiThemeProvider>
        </div> 

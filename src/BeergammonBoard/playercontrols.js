@@ -12,6 +12,7 @@ import { Container, Item } from "../Grid";
 import DiceDialog from "./dicedialog";
 import AceyDeuceyDialog from "./aceydeuceydialog";
 import Player from "./player";
+import Drink from "./drink";
 
 const Button = styled(Fab)`
   && {
@@ -89,6 +90,7 @@ class PlayersControls extends React.Component {
          </FullHeightContainer>
          <DiceDialog {...this.props} />
          <AceyDeuceyDialog {...this.props} />
+         <Drink {...this.props} />
       </div>
    </Item>
    <Item>
