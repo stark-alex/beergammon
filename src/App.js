@@ -69,7 +69,7 @@ class App extends Component {
                      <div>
                         <AppBar>
                            <Toolbar>
-                              <Logo>Beergammon (beta 0.1.9)</Logo>
+                              <Logo>Beergammon (beta 0.1.11)</Logo>
                               <Typography>{process.env.REACT_APP_API_URL}</Typography>
                            </Toolbar>
                         </AppBar>
