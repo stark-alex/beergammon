@@ -13,7 +13,6 @@ import colors from "../colors";
 import DiceDialog from "./dicedialog";
 import AceyDeuceyDialog from "./aceydeuceydialog";
 import Player from "./player";
-import Drink from "./drink";
 
 const Button = styled(Fab)`
   && {
@@ -207,7 +206,6 @@ class PlayersControls extends React.Component {
          aceyDeuceyRolled={this.props.isActive && this.props.ctx.phase === 'play' && this.props.G.dice.includes(12)}
          onResolveAceyDeucey={this.handleAceyDeucy}
          />
-         <Drink {...this.props} />
       </div>
    </Item>
    <Item>

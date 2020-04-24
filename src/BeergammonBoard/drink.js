@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { withSnackbar } from 'notistack';
 
 import { DrinkReason } from "beergammon-game/constants";
@@ -8,45 +7,13 @@ class Drink extends Component {
 
    state = {
       isLoadingNames: false,
-      playersNames: {
-        0: "Fred",
-        1: "George"
-      },
    };
 
    notifiedDrinks = [];
 
-   componentDidMount() {
-      // No names to load from the server if not in muti-player mode.
-      if (!this.props.isMultiplayer || !this.props.gameID) {
-        return;
-      }
-
-      this.setState({ isLoadingNames: true });
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/games/beergammon`)
-        .then(response => {
-          const room =
-            response.data &&
-            response.data.rooms.find(
-              room => room.gameID === this.props.gameID
-            );
-          if (!room) {
-            return;
-          }
-          this.setState({
-            playersNames: room.players.reduce((object, player) => {
-              object[`${player.id}`] = player.name;
-              return object;
-            }, {})
-          });
-        })
-        .finally(() => this.setState({ isLoadingNames: false }));
-    }
-
    componentDidUpdate(prevProps) {
-      if (this.props.G.drinks !== prevProps.G.drinks) {
-         this.props.G.drinks.forEach(function(drink) {
+      if (this.props.drinks !== prevProps.drinks) {
+         this.props.drinks.forEach(function(drink) {
             if (!this.notifiedDrinks.includes(drink.id)) {
                let msg =  ' ';
 
@@ -55,19 +22,18 @@ class Drink extends Component {
                      msg = "Social!";
                     break;
                   case DrinkReason.NUMBER:
-                     msg = this.state.playersNames[drink.player] + ", drink for your number.";
+                     msg = this.props.playersNames[drink.player] + ", drink for your number.";
                      break;
                   case DrinkReason.DOUBLES:
-                     msg = this.state.playersNames[drink.player] + ", drink for doubles.";
+                     msg = this.props.playersNames[drink.player] + ", drink for doubles.";
                      break;
                   case DrinkReason.CANT_MOVE:
-                     msg = this.state.playersNames[drink.player] + ", drink " + drink.count + " because you can't move.";
+                     msg = this.props.playersNames[drink.player] + ", drink " + drink.count + " because you can't move.";
                      break;
                   default:
                      msg = "You shouldn't see this, everyone drink!";
                      break;
                   }
-
                this.props.enqueueSnackbar(msg);
                this.notifiedDrinks.push(drink.id);
             }
@@ -76,7 +42,7 @@ class Drink extends Component {
    }
 
   render() {
-    return ( <div /> );
+    return ( <div/> );
    }
 }
 

@@ -18,7 +18,7 @@ class Congratulations extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.ctx.gameover && !prevProps.ctx.gameover) {
+    if (this.props.gameover && !prevProps.gameover) {
       this.handleOpen();
     }
   }
@@ -38,7 +38,7 @@ class Congratulations extends Component {
   generateGraphData = (playerNames) => {
    // Add up all the drinks per turn per player.
    let drinksPerTurn = [ [], [] ];
-   this.props.G.drinks.forEach(drink => {
+   this.props.drinks.forEach(drink => {
       if (!drinksPerTurn[drink.player][drink.turn]) {
          drinksPerTurn[drink.player][drink.turn] = 0;
       }
@@ -47,7 +47,7 @@ class Congratulations extends Component {
 
    // Build up the graph points based on drinks per turn.
    let accumulatedDrinks = [ [ {x: 0, y: 0} ], [ {x: 0, y: 0} ] ]
-   for (let turn = 1; turn < this.props.ctx.turn; turn++) {
+   for (let turn = 1; turn < this.props.turn_cnt; turn++) {
       for (let player = 0; player <= 1; player++) {
          let drinksThisTurn = drinksPerTurn[player][turn] ? drinksPerTurn[player][turn] : 0;
          accumulatedDrinks[player][turn] = {
@@ -76,16 +76,16 @@ class Congratulations extends Component {
       return (
          <PlayersNamesContext.Consumer>
             {playersNames => {
-               const playerName = this.props.ctx.gameover && playersNames[this.props.ctx.gameover.winner];
+               const playerName = this.props.gameover && playersNames[this.props.gameover.winner];
 
                const data = this.generateGraphData(playersNames);
 
                return (
                   <Dialog open={this.state.open} fullWidth onClose={this.handleClose}>
-                     {this.props.ctx.gameover && (
+                     {this.props.gameover && (
                         <DialogTitle>Winner</DialogTitle>
                      )}
-                     {this.props.ctx.gameover && (
+                     {this.props.gameover && (
                         <DialogContent>
                            <Grid container justify="center">
                               <CardContent>{playerName} Wins!</CardContent>

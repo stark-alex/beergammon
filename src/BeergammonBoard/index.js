@@ -5,6 +5,7 @@ import axios from "axios";
 import PlayersControls from './playercontrols';
 import PlayersNamesContext from './playersNamesContext'
 import Congratulations from './congratulations'
+import Drink from "./drink";
 import { Board } from './board';
 
 import { Container, Item } from '../Grid';
@@ -65,7 +66,15 @@ export class BeergammonBoard extends React.Component {
                   <Board {...this.props} />
                </Item>
             </Container>
-            <Congratulations {...this.props} />
+            <Congratulations
+            gameover={this.props.ctx.gameover}
+            turn_cnt={this.props.ctx.turn}
+            drinks={this.props.G.drinks}
+            />
+            <Drink
+            playersNames={this.state.playersNames}
+            drinks={this.props.G.drinks}
+            />
          </PlayersNamesContext.Provider>
       )
    }
