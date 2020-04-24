@@ -6,7 +6,7 @@ import Routes from './Routes';
 import colors from './colors';
 
 import { createMuiTheme } from "@material-ui/core/styles";
-import { MuiThemeProvider } from "@material-ui/core";
+import { MuiThemeProvider, Typography } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ThemeProvider } from "styled-components";
@@ -70,6 +70,7 @@ class App extends Component {
                         <AppBar>
                            <Toolbar>
                               <Logo>Beergammon (beta 0.1.9)</Logo>
+                              <Typography>{process.env.REACT_APP_API_URL}</Typography>
                            </Toolbar>
                         </AppBar>
                      </div>

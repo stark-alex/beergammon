@@ -11,12 +11,10 @@ class Drink extends Component {
       playersNames: {
         0: "Fred",
         1: "George"
-      }
+      },
    };
 
-   handleDrink = () => {
-      this.props.moves.startDiceRoll();
-   };
+   notifiedDrinks = [];
 
    componentDidMount() {
       // No names to load from the server if not in muti-player mode.
@@ -49,7 +47,7 @@ class Drink extends Component {
    componentDidUpdate(prevProps) {
       if (this.props.G.drinks !== prevProps.G.drinks) {
          this.props.G.drinks.forEach(function(drink) {
-            if (!drink.notified) {
+            if (!this.notifiedDrinks.includes(drink.id)) {
                let msg =  ' ';
 
                switch (drink.reason) {
@@ -71,7 +69,7 @@ class Drink extends Component {
                   }
 
                this.props.enqueueSnackbar(msg);
-               this.props.moves.markDrinkNotified(drink.id);
+               this.notifiedDrinks.push(drink.id);
             }
          }.bind(this));
       }
