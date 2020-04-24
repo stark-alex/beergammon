@@ -65,7 +65,7 @@ class Dices3d extends Component {
     directionalLight.position.y = 1000;
     directionalLight.position.z = 1000;
     this.scene.add(directionalLight);
-    const light = new THREE.SpotLight(0xefdfd5, 1.3);
+    const light = new THREE.SpotLight(0xefdfd5);
     light.position.y = 100;
     light.target.position.set(0, 0, 0);
     light.castShadow = true;

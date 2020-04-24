@@ -2,7 +2,6 @@ import React from 'react';
 import colors from '../colors';
 import './board.css';
 
-
 import {
    PLAYER_0_POKEY,
    PLAYER_1_POKEY,

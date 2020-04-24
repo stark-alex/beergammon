@@ -1,5 +1,4 @@
 //import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import React, { Component } from 'react';
@@ -7,11 +6,12 @@ import Routes from './Routes';
 import colors from './colors';
 
 import { createMuiTheme } from "@material-ui/core/styles";
-import { MuiThemeProvider } from "@material-ui/core";
+import { MuiThemeProvider, Typography } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ThemeProvider } from "styled-components";
 import styled from "styled-components";
+import { SnackbarProvider } from 'notistack';
 
 const theme = {
    colors: {
@@ -60,17 +60,23 @@ class App extends Component {
    render() {
       return (
          <div>
+            
             <MuiThemeProvider theme={muiTheme}>
                <ThemeProvider theme={theme}>
-                  <div>
-                     <AppBar>
-                        <Toolbar>
-                           <Logo>Beergammon (beta 0.1.9)</Logo>
-                        </Toolbar>
-                     </AppBar>
-                  </div>
-                  <FixedAppBarMargin>{this.props.children}</FixedAppBarMargin>
-                  <Routes />
+                  <SnackbarProvider maxSnack={10} iconVariant={{
+                     default: '🍺',
+                  }}>
+                     <div>
+                        <AppBar>
+                           <Toolbar>
+                              <Logo>Beergammon (beta 0.1.11)</Logo>
+                              <Typography>{process.env.REACT_APP_API_URL}</Typography>
+                           </Toolbar>
+                        </AppBar>
+                     </div>
+                     <FixedAppBarMargin>{this.props.children}</FixedAppBarMargin>
+                     <Routes />
+                  </SnackbarProvider>
                </ThemeProvider>
             </MuiThemeProvider>
        </div> 
