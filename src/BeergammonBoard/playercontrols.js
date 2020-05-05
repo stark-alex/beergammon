@@ -39,7 +39,11 @@ class PlayersControls extends React.Component {
    };
 
    getDiceString() {
-      return this.props.G.dice.includes(12) ? "Acey Deucey!" : this.props.G.dice.filter(Boolean).join(", ")
+      if(!this.props.G.rollingDice) {
+         return this.props.G.dice.includes(12) ? "Acey Deucey!" : this.props.G.dice.filter(Boolean).join(", ")
+      } else {
+         return "";
+      }
    }
 
    getDice() {
@@ -137,19 +141,6 @@ class PlayersControls extends React.Component {
       this.props.moves.resolveAceyDeucey(number);
    }
 
-   // Player state (TODO: remove?)
-   getPlayerStateString(player) {
-      if (this.props.G.playerState[player] === 1) {
-         return "Playing";
-      } else if (this.props.G.playerState[player] === 2) {
-         return "On Pokey";
-      } else if (this.props.G.playerState[player] === 3) {
-         return "Moving In";
-      }
-
-      return "Huh?";
-   }
-
    render() {
       if (!this.rollForNumbersStarted && this.props.ctx.phase === 'rollForNumbers' && this.props.G.rollingDice === null) {
          this.props.moves.startRollForNumbers();
@@ -166,7 +157,6 @@ class PlayersControls extends React.Component {
       player="0"
       dice={this.props.ctx.currentPlayer === "0" ? this.getDiceString() : ""}
       number={this.props.G.numbers[0]}
-      state={this.getPlayerStateString(0)}
       />
    </Item>
    <Item center>
@@ -183,7 +173,7 @@ class PlayersControls extends React.Component {
                   Roll Dice
                </Button>
             </Item>
-            {/* button for debugging            */}
+            {/* button for debugging
             <Item>
                <Button
                disabled={!this.props.isActive || this.props.G.dice.length !== 0}
@@ -195,7 +185,7 @@ class PlayersControls extends React.Component {
                   Roll Override
                </Button>
             </Item>
-
+            */}
          </FullHeightContainer>
          <DiceDialog
          dice={this.getDice()}
@@ -213,7 +203,6 @@ class PlayersControls extends React.Component {
       player="1"
       dice={this.props.ctx.currentPlayer === "1" ? this.getDiceString() : ""}
       number={this.props.G.numbers[1]}
-      state={this.getPlayerStateString(1)}
       />
    </Item>
    <Item>
