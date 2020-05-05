@@ -74,7 +74,6 @@ export class BeergammonBoard extends React.Component {
             <Drink
             playersNames={this.state.playersNames}
             drinks={this.props.G.drinks}
-            doneRolling={this.props.G.dice && !this.props.G.rollingDice}
             />
          </PlayersNamesContext.Provider>
       )
