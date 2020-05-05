@@ -183,7 +183,7 @@ class PlayersControls extends React.Component {
                   Roll Dice
                </Button>
             </Item>
-            {/* button for debugging
+            {/* button for debugging            */}
             <Item>
                <Button
                disabled={!this.props.isActive || this.props.G.dice.length !== 0}
@@ -195,7 +195,7 @@ class PlayersControls extends React.Component {
                   Roll Override
                </Button>
             </Item>
-            */}
+
          </FullHeightContainer>
          <DiceDialog
          dice={this.getDice()}
@@ -203,7 +203,7 @@ class PlayersControls extends React.Component {
          onFinishRoll={this.handleFinishRoll}
           />
          <AceyDeuceyDialog
-         aceyDeuceyRolled={this.props.isActive && this.props.ctx.phase === 'play' && this.props.G.dice.includes(12)}
+         aceyDeuceyRolled={this.props.isActive && this.props.ctx.phase === 'play' && this.props.G.dice.includes(12) && !this.props.G.rollingDice}
          onResolveAceyDeucey={this.handleAceyDeucy}
          />
       </div>
