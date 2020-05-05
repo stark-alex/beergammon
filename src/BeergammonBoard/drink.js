@@ -12,7 +12,7 @@ class Drink extends Component {
    notifiedDrinks = [];
 
    componentDidUpdate(prevProps) {
-      if (this.props.drinks !== prevProps.drinks) {
+      if (this.props.doneRolling) {
          this.props.drinks.forEach(function(drink) {
             if (!this.notifiedDrinks.includes(drink.id)) {
                let msg =  ' ';
