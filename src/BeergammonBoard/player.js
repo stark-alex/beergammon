@@ -26,8 +26,7 @@ export const StyledAvatar = styled(Avatar)`
 const Player = ({
   player,
   dice,
-  number,
-  state
+  number
 }) => (
   <PlayersNamesContext.Consumer>
     {playersNames => {
@@ -44,7 +43,6 @@ const Player = ({
           />
           <CardContent>Current Moves: {dice}</CardContent>
           <CardContent>Number: {number}</CardContent>
-          <CardContent>{state}</CardContent>
         </DetachedCard>
       );
     }}

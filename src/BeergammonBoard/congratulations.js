@@ -95,6 +95,7 @@ class Congratulations extends Component {
                                  xLabel="Turns"
                                  yLabel="Drinks"
                                  showLegends
+                                 hidePoints
                                  data={data}
                               />
                            </Grid>
