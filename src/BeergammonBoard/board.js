@@ -36,7 +36,7 @@ export class Board extends React.Component {
       height: '200px',
       lineHeight: '50px',
       textAlign: 'center',
-      backgroundColor: colors['boardDark'],
+      backgroundColor: colors['pokey_home'],
    };
 
    pokeyStyle = {
@@ -44,7 +44,7 @@ export class Board extends React.Component {
       height: '200px',
       lineHeight: '50px',
       textAlign: 'center',
-      backgroundColor: colors['boardDark'],
+      backgroundColor: colors['pokey_home'],
    };
 
    pointStyle = {
@@ -91,6 +91,30 @@ export class Board extends React.Component {
       lineHeight: "40px",
    };
 
+   inHandPiece = {
+      position: "relative",
+      textAlign: "center",
+      borderRadius: "50%",
+      left: "4px",
+      top: "0px",
+      width: "40px",
+      height: "40px",
+      lineHeight: "40px",
+      boxShadow: "inset 0 0 0 3px " + colors['in_hand'],
+   };
+
+   inHandEmpty = {
+      position: "relative",
+      textAlign: "center",
+      borderRadius: "50%",
+      left: "4px",
+      top: "0px",
+      width: "40px",
+      height: "40px",
+      lineHeight: "40px",
+      boxShadow: "inset 0 0 0 3px " + colors['in_hand'],
+   };
+
    topPointPiecePosition = {
       top: "0px",
    }
@@ -115,10 +139,14 @@ export class Board extends React.Component {
 
    blackPiece = {...this.piece,...this.blackPiece};
    whitePiece = {...this.piece,...this.whitePiece};
+   inHandBlackPiece = {...this.inHandPiece,...this.blackPiece};
+   inHandWhitePiece = {...this.inHandPiece,...this.whitePiece};
 
    pieces = [
       {...this.piece,...this.blackPiece},
       {...this.piece,...this.whitePiece},
+      {...this.piece,...this.inHandBlackPiece},
+      {...this.piece,...this.inHandWhitePiece},
    ]
 
    onClick(id) {
@@ -128,21 +156,38 @@ export class Board extends React.Component {
    }
 
    getSpotPiece(id) {
-      let spot = this.props.G.spots[id]
+      let spot = this.props.G.spots[id];
+
       if (spot.player >= 0) {
-         let pieceStyle = null;
+         let pieceStyle = {};
+         let inHandOffset = (this.props.G.inHand === id) ? 2 : 0;
+
          if (STARTS.includes(id) || HOMES.includes(id) || POKEYS.includes(id)) {
             // Home and Pokey's get the same style.
-            pieceStyle = {...this.pieces[spot.player], ...this.homePokeyPiecePosition};
+            pieceStyle = {...this.pieces[spot.player + inHandOffset], ...this.homePokeyPiecePosition};
          } else if (id < 13) {
             // Top row points
-            pieceStyle = {...this.pieces[spot.player], ...this.topPointPiecePosition};
+            pieceStyle = {...this.pieces[spot.player + inHandOffset], ...this.topPointPiecePosition};
          } else {
             // Bottom row points
-            pieceStyle = {...this.pieces[spot.player], ...this.bottomPointPiecePosition};
+            pieceStyle = {...this.pieces[spot.player + inHandOffset], ...this.bottomPointPiecePosition};
          }
          return <div style={pieceStyle}>{spot.count}</div>
+      } else if (this.props.G.inHand === id) {
+         let emptyLastSpot = {};
+         if (STARTS.includes(id) || HOMES.includes(id) || POKEYS.includes(id)) {
+            // Home and Pokey's get the same style.
+            emptyLastSpot = {...this.inHandEmpty, ...this.homePokeyPiecePosition};
+         } else if (id < 13) {
+            // Top row points
+            emptyLastSpot = {...this.inHandEmpty, ...this.topPointPiecePosition};
+         } else {
+            // Bottom row points
+            emptyLastSpot = {...this.inHandEmpty, ...this.bottomPointPiecePosition};
+         }
+         return <div style={emptyLastSpot}>&nbsp;</div>
       }
+
       return "";
    }
 
